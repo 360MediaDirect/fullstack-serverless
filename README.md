@@ -78,6 +78,7 @@ custom:
     minimumProtocolVersion: TLSv1.2_2018
     priceClass: PriceClass_100
     noConfirm: false                           # Alternative to --no-confirm flag. Use this parameter if you do not want a confirmation prompt to interrupt automated builds.
+    noDeleteContents:                          # same as the --no-delete-contents cli option. Do not delete S3 bucket contents on deploy.
 ```
 
 
