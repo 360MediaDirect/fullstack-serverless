@@ -207,7 +207,7 @@ class ServerlessFullstackPlugin {
                             .then(exists => {
                                 if (exists) {
                                     this.serverless.cli.log(`Bucket found...`);
-                                    if (this.cliOptions['delete-contents'] === false) {
+                                    if (this.cliOptions['delete-contents'] === false || this.options.noDeleteContents) {
                                         this.serverless.cli.log(`Keeping current bucket contents...`);
                                         return BbPromise.resolve();
                                     }
