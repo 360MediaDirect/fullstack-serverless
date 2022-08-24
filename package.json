@@ -5,12 +5,11 @@
     "node": ">=4.0"
   },
   "description": "Deploy a fullstack serverless web app (including React, Angular, Node.js, Python) with an AWS CloudFront distribution in front of your API Gateway and static content from S3. Use your own custom domain, SSL from AWS, and AWS Web Application Firewall.",
-  "author": "MadSkills.io",
+  "author": "360MediaDirect",
   "license": "MIT",
-  "homepage": "https://www.madskills.io/fullstack-serverless",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MadSkills-io/fullstack-serverless"
+    "url": "https://github.com/360MediaDirect/fullstack-serverless"
   },
   "keywords": [
     "serverless",
