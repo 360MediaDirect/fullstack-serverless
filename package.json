@@ -1,6 +1,6 @@
 {
   "name": "@360mediadirect/fullstack-serverless",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "engines": {
     "node": ">=4.0"
   },
