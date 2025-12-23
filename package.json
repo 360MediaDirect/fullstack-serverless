@@ -1,6 +1,6 @@
 {
   "name": "@360mediadirect/fullstack-serverless",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "engines": {
     "node": ">=4.0"
   },
@@ -28,13 +28,42 @@
   ],
   "main": "index.js",
   "dependencies": {
-    "async": "^2.6.0",
-    "bluebird": "^3.5.1",
-    "chalk": "^2.0.0",
+    "async": "^3.2.5",
+    "bluebird": "^3.7.2",
+    "chalk": "^4.1.2",
     "is_js": "^0.9.0",
-    "js-yaml": "^3.10.0",
-    "lodash": "^4.13.1",
-    "mime": "^1.2.11",
-    "prompt-confirm": "^1.2.0"
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "mime": "^2.6.0",
+    "prompt-confirm": "^2.0.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "sinon": "^17.0.1",
+    "@types/jest": "^29.5.11"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:verbose": "jest --verbose --coverage"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "index.js",
+      "lib/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 95,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "testMatch": [
+      "**/__tests__/**/*.test.js",
+      "**/?(*.)+(spec|test).js"
+    ]
   }
 }

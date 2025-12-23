@@ -143,7 +143,7 @@ class ServerlessFullstackPlugin {
     const proc = spawn(command, args, {
       cwd: clientSrcPath,
       env: clientEnv,
-      shell: true,
+      shell: false,
     });
 
     proc.stdout.on("data", (data) => {
@@ -301,7 +301,7 @@ class ServerlessFullstackPlugin {
 
     const filename = path.resolve(__dirname, "lib/resources/resources.yml");
     const content = fs.readFileSync(filename, "utf-8");
-    const resources = yaml.safeLoad(content, {
+    const resources = yaml.load(content, {
       filename: filename,
     });
 
