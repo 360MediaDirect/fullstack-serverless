@@ -6,7 +6,7 @@ const bucketUtils = require('../lib/bucketUtils');
 const uploadDirectory = require('../lib/upload');
 const validateClient = require('../lib/validate');
 const invalidateCloudfrontDistribution = require('../lib/cloudFront');
-const Confirm = require('prompt-confirm');
+const inquirer = require('inquirer');
 
 jest.mock('child_process');
 jest.mock('fs');
@@ -15,7 +15,7 @@ jest.mock('../lib/bucketUtils');
 jest.mock('../lib/upload');
 jest.mock('../lib/validate');
 jest.mock('../lib/cloudFront');
-jest.mock('prompt-confirm');
+jest.mock('inquirer');
 
 describe('ServerlessFullstackPlugin', () => {
   let plugin;
@@ -157,28 +157,27 @@ describe('ServerlessFullstackPlugin', () => {
       plugin.cliOptions.confirm = undefined;
       plugin.options.noConfirm = undefined;
 
-      const mockConfirm = {
-        run: jest.fn().mockResolvedValue(true)
-      };
-      Confirm.mockImplementation(() => mockConfirm);
+      inquirer.prompt.mockResolvedValue({ confirmed: true });
 
       bucketUtils.bucketExists.mockResolvedValue(true);
       bucketUtils.emptyBucket.mockResolvedValue({});
 
       await plugin.removeDeployedResources();
 
-      expect(Confirm).toHaveBeenCalled();
-      expect(mockConfirm.run).toHaveBeenCalled();
+      expect(inquirer.prompt).toHaveBeenCalled();
+      expect(inquirer.prompt).toHaveBeenCalledWith([{
+        type: 'confirm',
+        name: 'confirmed',
+        message: expect.stringContaining('delete bucket'),
+        default: false
+      }]);
     });
 
     it('should skip removal if user declines confirmation', async () => {
       plugin.cliOptions.confirm = undefined;
       plugin.options.noConfirm = undefined;
 
-      const mockConfirm = {
-        run: jest.fn().mockResolvedValue(false)
-      };
-      Confirm.mockImplementation(() => mockConfirm);
+      inquirer.prompt.mockResolvedValue({ confirmed: false });
 
       await plugin.removeDeployedResources();
 
@@ -458,24 +457,24 @@ describe('ServerlessFullstackPlugin', () => {
       plugin.cliOptions.confirm = undefined;
       plugin.options.noConfirm = undefined;
 
-      const mockConfirm = {
-        run: jest.fn().mockResolvedValue(true)
-      };
-      Confirm.mockImplementation(() => mockConfirm);
+      inquirer.prompt.mockResolvedValue({ confirmed: true });
 
       await plugin.processDeployment();
 
-      expect(Confirm).toHaveBeenCalled();
+      expect(inquirer.prompt).toHaveBeenCalled();
+      expect(inquirer.prompt).toHaveBeenCalledWith([{
+        type: 'confirm',
+        name: 'confirmed',
+        message: expect.stringContaining('proceed'),
+        default: false
+      }]);
     });
 
     it('should cancel deployment if user declines', async () => {
       plugin.cliOptions.confirm = undefined;
       plugin.options.noConfirm = undefined;
 
-      const mockConfirm = {
-        run: jest.fn().mockResolvedValue(false)
-      };
-      Confirm.mockImplementation(() => mockConfirm);
+      inquirer.prompt.mockResolvedValue({ confirmed: false });
 
       await plugin.processDeployment();
 

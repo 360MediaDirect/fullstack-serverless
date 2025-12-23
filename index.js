@@ -6,7 +6,7 @@ const fs = require("fs");
 const { spawn } = require("child_process");
 
 const BbPromise = require("bluebird");
-const Confirm = require("prompt-confirm");
+const inquirer = require("inquirer");
 
 const bucketUtils = require("./lib/bucketUtils");
 const uploadDirectory = require("./lib/upload");
@@ -73,12 +73,15 @@ class ServerlessFullstackPlugin {
     return this.validateConfig()
       .then(() => {
         bucketName = this.getBucketName(this.options.bucketName);
-        return this.cliOptions.confirm === false ||
-          this.options.noConfirm === true
-          ? true
-          : new Confirm(
-              `Are you sure you want to delete bucket '${bucketName}'?`
-            ).run();
+        if (this.cliOptions.confirm === false || this.options.noConfirm === true) {
+          return true;
+        }
+        return inquirer.prompt([{
+          type: 'confirm',
+          name: 'confirmed',
+          message: `Are you sure you want to delete bucket '${bucketName}'?`,
+          default: false
+        }]).then(answers => answers.confirmed);
       })
       .then((goOn) => {
         if (goOn) {
@@ -225,10 +228,15 @@ class ServerlessFullstackPlugin {
           );
 
           deployDescribe.forEach((m) => this.serverless.cli.log(m));
-          return this.cliOptions.confirm === false ||
-            this.options.noConfirm === true
-            ? true
-            : new Confirm(`Do you want to proceed?`).run();
+          if (this.cliOptions.confirm === false || this.options.noConfirm === true) {
+            return true;
+          }
+          return inquirer.prompt([{
+            type: 'confirm',
+            name: 'confirmed',
+            message: `Do you want to proceed?`,
+            default: false
+          }]).then(answers => answers.confirmed);
         })
         .then((goOn) => {
           if (goOn) {
