@@ -1,6 +1,6 @@
 {
   "name": "@360mediadirect/fullstack-serverless",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "engines": {
     "node": ">=4.0"
   },
@@ -32,7 +32,7 @@
     "bluebird": "^3.7.2",
     "chalk": "^4.1.2",
     "inquirer": "^8.2.6",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "lodash": "^4.17.21",
     "mime": "^2.6.0"
   },
